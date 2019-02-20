@@ -26,26 +26,13 @@ module.exports = function (app) {
         // Parsing the data sent by the user
         // userData will hold the javascript object accessible through req.body 
         var userData = req.body;
-        // console.log(userData)
-        var userScoreString = (userData.scores);
-        // transform the string of numnbers to an array of integers
-        var userScores = userScoreString.map(Number);
-        var userName = userData.name;
-        var userPhoto = userData.photo;
-
-        // calculate the total score obtained by the user
-        var userTotal = 0;
-        for (var i = 0; i < userScores.length; i++) {
-            userTotal += userScores[i];
-        }
-        // console.log("length", userData.scores.length);
-        console.log("userTotal", userTotal);
+   
         // scoreDifference will hold the difference in scores between user and 
         // friends  in the data base. 
         var scoreDifference = 0;
 
         //loop through the friends data array of objects to get each friends scores
-        for (var i = 0; i < friends.length - 1; i++) {
+        for (var i = 0; i < friends.length; i++) {
             // console.log(friends[i].name);
             scoreDifference = 0;
 
@@ -54,10 +41,10 @@ module.exports = function (app) {
             var friendScore = 0;
             for (var j = 0; j < 10; j++) {
                 // We calculate the difference between the scores and sum them into the scoreDifference
-                friendScore += friends[i].scores[j];
+                friendScore = friends[i].scores[j];
                 
                 console.log("friendsScore",friendScore)
-                scoreDifference = Math.abs(parseInt(userTotal) - parseInt(friendScore));
+                scoreDifference = Math.abs(parseInt(userData.scores[j]) - parseInt(friendScore));
                 // create an  object to store information of the best match.
                 var bestMatch = {
                     name: "",
@@ -82,6 +69,7 @@ module.exports = function (app) {
         res.json(bestMatch);
     });
 };
+
 
 
 
